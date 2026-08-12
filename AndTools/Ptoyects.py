@@ -1,6 +1,6 @@
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,6,0)
+__version__ = V(1,6,1)
 
 from os import makedirs, path
 from json import JSONDecoder, JSONEncoder, dumps as _json_dumps, dump as _json_dump, loads as _json_loads, load as _json_load
@@ -23,7 +23,7 @@ class DataBaseJsonManger():
                 fp.write("{\n\n}")
     def create(self,id,registro):
         with open(self.plain_file,"r") as fp:
-            db_dict = _json_load(fp)
+            db_dict = json.load(fp)
         try:
             if db_dict[id]:
                 return False
@@ -31,11 +31,11 @@ class DataBaseJsonManger():
             pass
         db_dict[id]=registro
         with open(self.plain_file,"w") as fp:
-            _json_dump(db_dict,fp,indent=4)
+            json.dump(db_dict,fp,indent=4)
         return True
     def update(self,id,registro):
         with open(self.plain_file,"r") as fp:
-            db_dict = _json_load(fp)
+            db_dict = json.load(fp)
         try:
             if not db_dict[id]:
                 return False
@@ -43,18 +43,18 @@ class DataBaseJsonManger():
             return False
         db_dict[id]=registro
         with open(self.plain_file,"w") as fp:
-            _json_dump(db_dict,fp,indent=2)
+            json.dump(db_dict,fp,indent=2)
         return True
     def read(self,id=None):
         with open(self.plain_file,"r") as f:
-            db_dict:dict = _json_load(f)
+            db_dict:dict = json.load(f)
         if id:
             return db_dict[id]
         else:
          return db_dict
     def delete(self,id):
         with open(self.plain_file,"r") as f:
-            db_dict:dict = _json_load(f)
+            db_dict:dict = json.load(f)
         try:
             if not db_dict[id]:
                 return False
@@ -62,11 +62,11 @@ class DataBaseJsonManger():
             return False
         db_dict.pop(id)
         with open(self.plain_file,"w") as f:
-            _json_dump(db_dict,f,indent=2)
+            json.dump(db_dict,f,indent=2)
         return True
     def _set(self,data):
         with open(self.plain_file,"w") as f:
-            _json_dump(data,f,indent=2)
+            json.dump(data,f,indent=2)
         return True
 
 class ConfigFormatError(Exception):...
