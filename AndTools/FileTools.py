@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 __author__ = "Andev"
 from .Types import Version as V
 __version__ = V(1,6,0)
+=======
+__author__ = "Anderesu44"
+__version__ = 1.4
+>>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
 
 from os import listdir, path
 from types import FunctionType as function

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 __author__ = "Andev"
 from .Types import Version as V
 __version__ = V(1,6,1)
@@ -7,6 +8,13 @@ from json import JSONDecoder, JSONEncoder, dumps as _json_dumps, dump as _json_d
 from _io import TextIOWrapper
 from typing import Any
 from types import NoneType
+=======
+__author__ = "Anderesu44"
+__version__ = 1.4
+
+from os import makedirs, path
+from json import load,dump
+>>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
 
 class DataBaseJsonManger():
     def __init__(self,db_path:str=".\\db",name:str="db.json"):
@@ -23,7 +31,11 @@ class DataBaseJsonManger():
                 fp.write("{\n\n}")
     def create(self,id,registro):
         with open(self.plain_file,"r") as fp:
+<<<<<<< HEAD
             db_dict = json.load(fp)
+=======
+            db_dict = load(fp)
+>>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         try:
             if db_dict[id]:
                 return False
@@ -31,11 +43,19 @@ class DataBaseJsonManger():
             pass
         db_dict[id]=registro
         with open(self.plain_file,"w") as fp:
+<<<<<<< HEAD
             json.dump(db_dict,fp,indent=4)
         return True
     def update(self,id,registro):
         with open(self.plain_file,"r") as fp:
             db_dict = json.load(fp)
+=======
+            dump(db_dict,fp,indent=4)
+        return True
+    def update(self,id,registro):
+        with open(self.plain_file,"r") as fp:
+            db_dict = load(fp)
+>>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         try:
             if not db_dict[id]:
                 return False
@@ -43,18 +63,30 @@ class DataBaseJsonManger():
             return False
         db_dict[id]=registro
         with open(self.plain_file,"w") as fp:
+<<<<<<< HEAD
             json.dump(db_dict,fp,indent=2)
         return True
     def read(self,id=None):
         with open(self.plain_file,"r") as f:
             db_dict:dict = json.load(f)
+=======
+            dump(db_dict,fp,indent=2)
+        return True
+    def read(self,id=None):
+        with open(self.plain_file,"r") as f:
+            db_dict:dict = load(f)
+>>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         if id:
             return db_dict[id]
         else:
          return db_dict
     def delete(self,id):
         with open(self.plain_file,"r") as f:
+<<<<<<< HEAD
             db_dict:dict = json.load(f)
+=======
+            db_dict:dict = load(f)
+>>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         try:
             if not db_dict[id]:
                 return False
@@ -62,6 +94,7 @@ class DataBaseJsonManger():
             return False
         db_dict.pop(id)
         with open(self.plain_file,"w") as f:
+<<<<<<< HEAD
             json.dump(db_dict,f,indent=2)
         return True
     def _set(self,data):
@@ -201,3 +234,33 @@ class json:
                 standarized_obj.append(cls.standarizer(value))
         else:
             raise
+=======
+            dump(db_dict,f,indent=2)
+        return True
+    def _set(self,data):
+        with open(self.plain_file,"w") as f:
+            dump(data,f,indent=2)
+        return True
+
+class ConfigManager(dict):
+    def __init__(self,db_path: str = ".\\db",name: str = "cfg.json",init:dict|None=None):
+        super().__init__()
+        self.db = DataBaseJsonManger(db_path,name)
+        self.load_config()
+        if len(self)==0:
+            if init:
+                self.set_config(init)
+
+    def save_config(self,*args,**kwargs):
+        self.db._set(self)
+    def load_config(self):
+        data = self.db.read()
+        for key in data:
+            value = data[key]
+            self.__setitem__(key,value)
+    def set_config(self,data):
+        for key in data:
+            value = data[key]
+            self.__setitem__(key,value)
+        self.save_config()
+>>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
