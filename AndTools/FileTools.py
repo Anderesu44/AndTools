@@ -1,18 +1,83 @@
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,7,0)
+__version__ = V(1,8,0)
 
-from os import listdir, path
-from types import FunctionType as function
+import sys
+from os import listdir, path as os_path, name as os_name, getcwd
+from typing import Optional,Literal
+from .Types import FunctionType as function
 from .TextHandle import format_text
 
 class DirNotFoundError(FileNotFoundError):...
 
+class Path():
+    def __init__(self,path:str,*,sep:Optional[str]=None,level:Literal["system","user"]="system") -> None:
+        self.sep = sep or self.get_sys_sep()
+        self.pre = self.get_pre_path(level)
+        self.path = path
+
+    @property
+    def realpath(self)->str:
+        path = self.path
+        if "\\" in path and self.sep != "\\":
+            path = path.replace("\\",self.sep)
+        if "/" in path and self.sep != "/":
+            path = path.replace("/",self.sep)
+        part_path = path.split(self.sep)
+        if part_path[0] == "~":
+            part_path[0] = os_path.expanduser("~")
+        if part_path[0] == ".":
+            part_path[0] = self.pre
+        if part_path[0] == "..":
+            part_path[0] = os_path.dirname(self.pre)
+
+        if not part_path[0]:
+            if len(part_path[1]) == 1:
+                if os_name == "nt":
+                    part_path[1] += ":"
+                part_path.pop(0)
+            else:
+                part_path[0]
+        
+        path = self.sep.join(part_path)
+        return os_path.realpath(path)
+
+    def is_dir(self)->bool:
+        return os_path.isdir(self.realpath)
+
+    @classmethod
+    def get_sys_sep(cls)->Literal["/","\\"]:
+        if os_name == "nt":
+            return "\\"
+        else:
+            return "/"
+    @classmethod
+    def get_pre_path(cls,level:Literal["system","user"]="system")->str:
+        def temp(obj):
+            try:
+                return str(obj)
+            except:
+                return "No accesible"
+        if level == "system":
+            if getattr(sys,"freze",False):
+                return os_path.dirname(sys.executable)
+            else:
+                return sys.path[0] #os_path.dirname(sys.path[0])
+            
+        else:
+            return getcwd()
+
+    def __str__(self) -> str:
+        return self.realpath
+
+
+    s = realpath
+    
+    
 class Tree():
     def __init__(self,path_:str,folders_function:function|None=None,files_function:function|None=None) -> None:
-        
-        path_ = path.realpath(path.expanduser(path_))
-        if not path.isdir(path_):
+        path_ = os_path.realpath(os_path.expanduser(path_))
+        if not os_path.isdir(path_):
             raise DirNotFoundError("Dir not found")
         self.root:str = path_ or ""
         self.folders_function:function|None = folders_function
@@ -46,8 +111,8 @@ class Tree():
         childrens = listdir(branch)
         
         for child in childrens:
-            child_path = path.join(branch,child)
-            if path.isdir(child_path):
+            child_path = os_path.join(branch,child)
+            if os_path.isdir(child_path):
                 #?child_type = "Branch"
                 if type(self.folders_function) == function:
                     self.folders_function(child_path)
@@ -64,11 +129,11 @@ class Tree():
 #!in development
 class Branch:
     def __init__(self,_path:str):
-        if not path.isdir(_path):
+        if not os_path.isdir(_path):
             raise TypeError(f'"{_path}" Not found or not a folder')
         
-        name = path.basename(_path)
-        location = path.dirname(_path)
+        name = os_path.basename(_path)
+        location = os_path.dirname(_path)
         
         self._path:str = _path
         self.name:str =name
@@ -120,11 +185,11 @@ class Branch:
     
 class Fruit:
     def __init__(self,_path:str):
-        if not path.isfile(_path):
+        if not os_path.isfile(_path):
             raise TypeError(f'"{_path}" Not found or not a file')
         
-        name = path.basename(_path)
-        location = path.dirname(_path)
+        name = os_path.basename(_path)
+        location = os_path.dirname(_path)
         
         
         self.path:str = _path

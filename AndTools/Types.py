@@ -1,5 +1,5 @@
 __author__ = "Anderesu44"
-__version__ = 1.7#.0
+__version__ = 1.8#.0
 
 from typing import Iterable, Iterator, Literal, SupportsIndex
 from types import FunctionType, NoneType

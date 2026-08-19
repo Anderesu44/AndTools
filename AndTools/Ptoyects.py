@@ -1,14 +1,15 @@
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,7,1)
+__version__ = V(1,8,0)
 
 import sys
 
 from os import makedirs, path
 from json import JSONDecoder, JSONEncoder, dumps as _json_dumps, dump as _json_dump, loads as _json_loads, load as _json_load
 from _io import TextIOWrapper
-from typing import Any, Literal
+from typing import Any, Literal,Callable
 from .Types import SecureString, FunctionType, NoneType
+
 class DataBaseJsonManger():
     def __init__(self,db_path:str=".\\db",name:str="db.json"):
         db_path = path.realpath(path.expanduser(db_path))
@@ -155,11 +156,30 @@ class json:
         except AttributeError:
             raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
     @classmethod
+    def str_for_error(cls,obj)->Any:
+        try:
+            return obj.__json__()
+        except AttributeError:
+            try:
+                return str(obj)
+            except AttributeError:
+                raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable") 
+    @classmethod
     def dumps(_cls,obj,*,skipkeys: bool = False,ensure_ascii: bool = True,check_circular: bool = True,
             allow_nan: bool = True,cls: type[JSONEncoder] | None = None,indent: int | str | None = None,
-            separators: tuple[str, str] | None = None,sort_keys: bool = False,**kwds: Any)->str:
+            separators: tuple[str, str] | None = None,default:Literal["default","str_for_error"]|Callable="default",sort_keys: bool = False,**kwds: Any)->str:
+        if type(default) == str:
+            match default:
+                case "str_for_error":
+                    _default = _cls.str_for_error
+                case "default":
+                    _default = default
+        elif isinstance(default,Callable):
+            _default = default
+        else:
+            raise TypeError(f"Default value must be a string or callable")
         return _json_dumps(obj,skipkeys=skipkeys,ensure_ascii=ensure_ascii,check_circular=check_circular,allow_nan=allow_nan,
-                            cls=cls,indent=indent,separators=separators,default=_cls.default,sort_keys=sort_keys,**kwds)
+                            cls=cls,indent=indent,separators=separators,default=_default,sort_keys=sort_keys,**kwds)
     @classmethod
     def dump(_cls,obj,fp:TextIOWrapper,*,skipkeys: bool = False,ensure_ascii: bool = True,check_circular: bool = True,
             allow_nan: bool = True,cls: type[JSONEncoder] | None = None,indent: int | str | None = None,
