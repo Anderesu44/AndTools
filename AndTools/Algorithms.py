@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,6,0)
-=======
-__author__ = "Anderesu44"
-__version__ = 1.4
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
+__version__ = V(1,7,0)
 
 __all__ = ["Algorithms"]
 class Algorithms:
@@ -42,9 +37,5 @@ class Algorithms:
         rList = _list[len(_list)//2:]
         lList = cls.mergeSort(lList)
         rList = cls.mergeSort(rList)
-<<<<<<< HEAD
-=======
-
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         return cls.__merge(lList,rList)
     

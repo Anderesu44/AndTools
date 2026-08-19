@@ -1,8 +1,7 @@
 # Andev tools
-<<<<<<< HEAD
 
 > Andev Tools is a collection of utilities for Python development
-> <br>_V: 1.6.1_
+> <br>_V: 1.7.0_
 
 ## Install
 
@@ -30,7 +29,5 @@
    ```
 5. installar
    ```bash
-   pip3 install dist/andtools-1.6.1-py3-none-any.whl
+   pip3 install dist/andtools-1.7.0-py3-none-any.whl
    ```
-=======
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369

@@ -1,26 +1,19 @@
-<<<<<<< HEAD
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,6,1)
+__version__ = V(1,7,0)
+
+import sys
 
 from os import makedirs, path
 from json import JSONDecoder, JSONEncoder, dumps as _json_dumps, dump as _json_dump, loads as _json_loads, load as _json_load
 from _io import TextIOWrapper
-from typing import Any
-from types import NoneType
-=======
-__author__ = "Anderesu44"
-__version__ = 1.4
-
-from os import makedirs, path
-from json import load,dump
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
-
+from typing import Any, Literal
+from .Types import SecureString, FunctionType, NoneType
 class DataBaseJsonManger():
     def __init__(self,db_path:str=".\\db",name:str="db.json"):
         db_path = path.realpath(path.expanduser(db_path))
         self.plain_file = path.join(db_path,name)
-        makedirs(db_path,True)
+        makedirs(db_path,511,True)
         try:
             with open(self.plain_file,"r+") as fp:
                 a = fp.read()
@@ -31,11 +24,7 @@ class DataBaseJsonManger():
                 fp.write("{\n\n}")
     def create(self,id,registro):
         with open(self.plain_file,"r") as fp:
-<<<<<<< HEAD
             db_dict = json.load(fp)
-=======
-            db_dict = load(fp)
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         try:
             if db_dict[id]:
                 return False
@@ -43,19 +32,11 @@ class DataBaseJsonManger():
             pass
         db_dict[id]=registro
         with open(self.plain_file,"w") as fp:
-<<<<<<< HEAD
             json.dump(db_dict,fp,indent=4)
         return True
     def update(self,id,registro):
         with open(self.plain_file,"r") as fp:
             db_dict = json.load(fp)
-=======
-            dump(db_dict,fp,indent=4)
-        return True
-    def update(self,id,registro):
-        with open(self.plain_file,"r") as fp:
-            db_dict = load(fp)
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         try:
             if not db_dict[id]:
                 return False
@@ -63,30 +44,18 @@ class DataBaseJsonManger():
             return False
         db_dict[id]=registro
         with open(self.plain_file,"w") as fp:
-<<<<<<< HEAD
             json.dump(db_dict,fp,indent=2)
         return True
     def read(self,id=None):
         with open(self.plain_file,"r") as f:
             db_dict:dict = json.load(f)
-=======
-            dump(db_dict,fp,indent=2)
-        return True
-    def read(self,id=None):
-        with open(self.plain_file,"r") as f:
-            db_dict:dict = load(f)
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         if id:
             return db_dict[id]
         else:
          return db_dict
     def delete(self,id):
         with open(self.plain_file,"r") as f:
-<<<<<<< HEAD
             db_dict:dict = json.load(f)
-=======
-            db_dict:dict = load(f)
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
         try:
             if not db_dict[id]:
                 return False
@@ -94,7 +63,6 @@ class DataBaseJsonManger():
             return False
         db_dict.pop(id)
         with open(self.plain_file,"w") as f:
-<<<<<<< HEAD
             json.dump(db_dict,f,indent=2)
         return True
     def _set(self,data):
@@ -139,9 +107,9 @@ class ConfigManager():
         for key, value in data.items():
             if type(key) != str:
                 raise ConfigFormatError(f"main:key type error {type(key)}")
-            if key != "cfgs":
-                if not getattr(self,key,False):
-                    setattr(self,key,value)
+            if key.strip() != "cfgs":
+                if key.strip() not in ["","db","_ConfigManager__isdinamic","__isdinamic"] and key[0] not in [str(n) for n in range(10)] and SecureString(key):
+                    setattr(self,SecureString(key).s,value)
                 else:
                     print(f"[WARNING] attribute {key} not add")
             else:
@@ -210,57 +178,138 @@ class json:
         return _json_load(fp)
     @classmethod
     def standarizer(cls,obj:Any)->Any:
-        if isinstance(obj,(str,int,bool,bool,NoneType)):
+        if not isinstance(obj,(str,int,float,bool,NoneType)):
             try:
                 obj = obj.__json__() # pyright: ignore[reportOptionalMemberAccess, reportAttributeAccessIssue]
-            except AttributeError:
+            except AttributeError,TypeError:
                 try:
                     obj = dict(obj) # pyright: ignore[reportCallIssue, reportArgumentType]
-                except TypeError:
+                except TypeError, ValueError:
                     try:
                         obj = list(obj) # pyright: ignore[reportArgumentType]
                     except TypeError:
-                        obj = str(obj)
+                        return str(obj)
         else:
             return obj
 
         if isinstance(obj,dict):
             standarized_obj = {}
-            for (key,value) in obj.values():
-                standarized_obj[cls.standarizer(key)]=cls.standarizer(value)
+            for (key,value) in obj.items():
+                try:
+                    standarized_obj[cls.standarizer(key)]=cls.standarizer(value)
+                except Exception as Error:
+                    standarized_obj[cls.standarizer(key)]="Not accessible"
+            return standarized_obj
         elif isinstance(obj,(list,tuple,set)):
             standarized_obj = []
             for value in obj:
                 standarized_obj.append(cls.standarizer(value))
+            return standarized_obj
         else:
             raise
-=======
-            dump(db_dict,f,indent=2)
-        return True
-    def _set(self,data):
-        with open(self.plain_file,"w") as f:
-            dump(data,f,indent=2)
-        return True
 
-class ConfigManager(dict):
-    def __init__(self,db_path: str = ".\\db",name: str = "cfg.json",init:dict|None=None):
-        super().__init__()
-        self.db = DataBaseJsonManger(db_path,name)
-        self.load_config()
-        if len(self)==0:
-            if init:
-                self.set_config(init)
 
-    def save_config(self,*args,**kwargs):
-        self.db._set(self)
-    def load_config(self):
-        data = self.db.read()
-        for key in data:
-            value = data[key]
-            self.__setitem__(key,value)
-    def set_config(self,data):
-        for key in data:
-            value = data[key]
-            self.__setitem__(key,value)
-        self.save_config()
->>>>>>> facc81aaaf74a44845e68bda355b133bce1c1369
+function = FunctionType
+INFORME = """
+date:{date}
+Context:
+    proyect_path:{proyect_path}
+    main_file:{main_file}
+    argv:
+        {argv}
+    globals:
+        {globals}
+    special:
+        {special}
+Exception:
+    {Traceback}
+    {Exception}: {Exception_messeger}
+    line:{line}
+    column:{column}
+
+
+ExcConVersion = {__version__}
+"""
+class ErrorControlled(Exception):...
+global _special_vars
+
+_special_vars:dict[str,Any]={}
+class ExcpectionController:
+    def __init__(self,msg:str|Literal[False]|None = None,special_vars:dict[str,Any]={},) -> None:
+        _special_vars = special_vars
+        msg = "" if msg == False else msg
+        self.msg = msg or "An unexpected error has occurred, don't worry. if it persist contact me"
+        self.__version__ = "0.1"
+
+
+    def __call__(self,fun:function,except_fun:function|None = None,except_fun_args:list=[],except_fun_kwds:dict=dict()) -> function:
+        
+        def wrapper(*args: Any, **kwds: Any)->Any|ErrorControlled:
+            try:
+                return_ = fun(*args,**kwds)
+            except Exception as Error:
+                import __main__
+                from sys import argv
+                from datetime import datetime
+                from .TextHandle import format_text as format
+                import traceback
+                __globals = globals()
+                __globals.pop("__builtins__")
+                __globals = json.standarizer(__globals)
+                _special_vars = __globals.pop("_special_vars")
+                _special_vars = json.standarizer(_special_vars)
+                if getattr(sys, 'frozen', False):
+                    proyect_path = path.dirname(path.abspath(argv[0]))
+                else:
+                    proyect_path = path.dirname(path.abspath(__main__.__file__))
+                info:dict[str,str] = {
+                    "date":str(datetime.now()),
+                    "proyect_path":proyect_path,
+                    "main_file":__main__.__file__,
+                    "argv":str(argv),
+                    "globals":json.dumps(__globals,indent=4),
+                    "Traceback":format(*traceback.format_exception(NameError,Error,tb=Error.__traceback__)[:-1],step="    ").replace('", line ',':'),
+                    "Exception":str(type(Error).__name__),
+                    "Exception_messeger":str(Error),
+                    "special":str(json.dumps(_special_vars,indent=4) or "") ,
+                    "__version__":str(__version__),
+                    "line":"0", #? IN DEV
+                    "column":"1", #? IN DEV
+                }
+                error_text = INFORME.format(**info)
+                try:
+                    version = __version__
+                except NameError:
+                    version = 0.0
+                erorr_file = path.join(proyect_path, "errors.log")
+                temp:str=""
+                try:
+                    with open(erorr_file,"r",encoding="UTF-8") as ft:
+                        temp = ft.read()
+                except FileNotFoundError:
+                    pass
+                with open(erorr_file,"w",encoding="UTF-8") as ft:
+                    temp:str = temp + "\n"+error_text if temp else error_text
+                    ft.write(temp)
+                    print(self.msg)
+                
+                return ErrorControlled
+
+            return return_
+        return wrapper # type: ignore
+
+    @classmethod
+    def add_var(cls,name:str,value:Any) -> None:
+        _special_vars[name] = value
+
+ExcCon = ExcpectionController
+# exccontroller = ExcpectionController()
+
+# @exccontroller # type: ignore
+# def main(*args,**kwds):
+#     print(*args,kwds)
+#     2/0
+
+# if __name__ == "__main__":
+#     pass
+#     main("el pepe",24,32,la="loca")

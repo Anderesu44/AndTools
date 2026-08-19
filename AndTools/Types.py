@@ -1,11 +1,12 @@
 __author__ = "Anderesu44"
-__version__ = 1.6
+__version__ = 1.7#.0
 
 from typing import Iterable, Iterator, Literal, SupportsIndex
-
+from types import FunctionType, NoneType
 
 class SecureString():
     _content:str
+    s:str
     allow_chars:list[str] = ["-", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     replace_chars:dict[str,str]={" ":"-",",":"-"}
     _case:Literal["Upper","Lower","Title","Default"]="Lower"
@@ -17,7 +18,7 @@ class SecureString():
         if case_:
             self._case = case_
         if not object:
-            self._content = ""
+            self._content = self.s = ""
             return
         string = str(object)
         secure_string = ""
@@ -34,8 +35,7 @@ class SecureString():
             secure_string = secure_string.title()
         # print(secure_string)
         # self = self.replace(self.__str__(),secure_string)
-        self._content:str = secure_string
-
+        self._content = self.s = secure_string
         
     def __add__(self, value: str) -> str:
         return self._content.__add__(value)
