@@ -9,7 +9,7 @@
 
 - **Python 3.13+**
 
-## Install Step
+## Install Steps
 
 1. Clone Repository
    ```bash
@@ -19,15 +19,26 @@
    ```bash
    cd andtools
    ```
-3. instalar dependencias
+3. install requeriments
    ```bash
    pip3 install -r requierements.txt
    ```
-4. Empaquetar
+4. build the package
    ```bash
    python3 -m build
    ```
-5. installar
+5. install using pip
    ```bash
+   pip3 install dist/andtools-1.7.1-py3-none-any.whl
+   ```
+
+## Install in a project Steps
+
+1. Download whl.file from [releases](https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.7.1-py3-none-any.whl)
+   ```bash
+   curl -L -o andtools-1.7.1-py3-none-any.whl https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.7.1-py3-none-any.whl
+   ```
+2. install using pip
+   ```
    pip3 install dist/andtools-1.7.1-py3-none-any.whl
    ```

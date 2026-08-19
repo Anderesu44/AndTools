@@ -1,0 +1,10 @@
+{
+    "STABLE":{
+        "LASTEST":"1.7.1",
+        "Urls":{
+            "1.7.1":"https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.7.1-py3-none-any.whl",
+            "1.6.2":"https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.6.2-py3-none-any.whl",
+            "1.4.0":"https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.4.0-py3-none-any.whl"
+        }
+    }
+}
