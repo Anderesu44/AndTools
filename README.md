@@ -1,7 +1,7 @@
 # Andev tools
 
 > Andev Tools is a collection of utilities for Python development
-> <br>_V: 1.7.0_
+> <br>_V: 1.7.1_
 
 ## Install
 
@@ -15,7 +15,7 @@
    ```bash
    git clone https://github.com/anderesu44/andtools.git
    ```
-2. enter in directory
+2. Enter in directory
    ```bash
    cd andtools
    ```
@@ -29,5 +29,5 @@
    ```
 5. installar
    ```bash
-   pip3 install dist/andtools-1.7.0-py3-none-any.whl
+   pip3 install dist/andtools-1.7.1-py3-none-any.whl
    ```

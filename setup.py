@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="AndTools",
-    version="1.7.0",
+    version="1.7.1",
     packages=find_packages(),
     # install_requires=[],# Add your project dependencies here
     author="Andev",

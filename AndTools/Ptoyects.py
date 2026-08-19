@@ -1,6 +1,6 @@
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,7,0)
+__version__ = V(1,7,1)
 
 import sys
 
@@ -109,7 +109,7 @@ class ConfigManager():
                 raise ConfigFormatError(f"main:key type error {type(key)}")
             if key.strip() != "cfgs":
                 if key.strip() not in ["","db","_ConfigManager__isdinamic","__isdinamic"] and key[0] not in [str(n) for n in range(10)] and SecureString(key):
-                    setattr(self,SecureString(key).s,value)
+                    setattr(self,SecureString(key,allow_chars=SecureString.allow_chars[1:] + ["_"]).s,value)
                 else:
                     print(f"[WARNING] attribute {key} not add")
             else:
