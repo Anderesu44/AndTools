@@ -1,5 +1,5 @@
 __author__ = "Anderesu44"
-__version__ = 1.8#.0
+__version__ = 1.8#.1
 
 from typing import Iterable, Iterator, Literal, SupportsIndex
 from types import FunctionType, NoneType
@@ -202,9 +202,9 @@ class SecureString():
 
 class Version:
     def __init__(self,major:int,minor:int,patch:int) -> None:
-        self.major = major
-        self.minor = minor
-        self.patch = patch
+        self.major = int(major)
+        self.minor = int(minor)
+        self.patch = int(patch)
 
     def as_integer_ratio(self) -> tuple[int, int]:
         return (self.major,self.minor)

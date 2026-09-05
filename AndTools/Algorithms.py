@@ -1,9 +1,9 @@
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,8,0)
+__version__ = V(1,8,5)
 
-__all__ = ["Algorithms"]
-class Algorithms:
+__all__ = ["SortAlgorithms"]
+class SortAlgorithms:
     @classmethod
     def bubbleSort(cls,_list:list)->list:
         n = len(_list)
@@ -38,4 +38,4 @@ class Algorithms:
         lList = cls.mergeSort(lList)
         rList = cls.mergeSort(rList)
         return cls.__merge(lList,rList)
-    
+Algorithms = SortAlgorithms

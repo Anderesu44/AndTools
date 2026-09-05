@@ -1,6 +1,6 @@
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,8,0)
+__version__ = V(1,8,4)
 
 import sys
 from os import listdir, path as os_path, name as os_name, getcwd
@@ -59,19 +59,26 @@ class Path():
             except:
                 return "No accesible"
         if level == "system":
-            if getattr(sys,"freze",False):
+            
+            if getattr(sys,"frozen",False):
                 return os_path.dirname(sys.executable)
             else:
                 return sys.path[0] #os_path.dirname(sys.path[0])
             
         else:
             return getcwd()
-
     def __str__(self) -> str:
         return self.realpath
-
-
     s = realpath
+
+    def __add__(self, other:Path|str):
+        return type(self)(self.s + self.sep + str(other))
+
+    def __and__(self, other:Path|str):
+        return self.s + self.sep + str(other)
+
+    def __fspath__(self)->str:
+        return str(self)
     
     
 class Tree():

@@ -1,6 +1,6 @@
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,8,0)
+__version__ = V(1,8,3)
 
 import sys
 
@@ -253,13 +253,13 @@ ExcConVersion = {__version__}
 class ErrorControlled(Exception):...
 global _special_vars
 
-_special_vars:dict[str,Any]={}
+_special_vars:list[dict[str,Any]]=[{}]
 class ExcpectionController:
     def __init__(self,msg:str|Literal[False]|None = None,special_vars:dict[str,Any]={},) -> None:
-        _special_vars = special_vars
+        _special_vars[0].update(special_vars)
         msg = "" if msg == False else msg
         self.msg = msg or "An unexpected error has occurred, don't worry. if it persist contact me"
-        self.__version__ = "0.1"
+        self.__version__ = "0.15.0"
 
 
     def __call__(self,fun:function,except_fun:function|None = None,except_fun_args:list=[],except_fun_kwds:dict=dict()) -> function:
@@ -320,7 +320,7 @@ class ExcpectionController:
 
     @classmethod
     def add_var(cls,name:str,value:Any) -> None:
-        _special_vars[name] = value
+        _special_vars[0][name] = value
 
 ExcCon = ExcpectionController
 # exccontroller = ExcpectionController()

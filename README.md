@@ -34,11 +34,15 @@
 
 ## Install in a project Steps
 
-1. Download whl.file from [releases](https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.0-py3-none-any.whl)
+1. Download whl.file from [releases](https://github.com/anderesu44/andtools/dub/releases/stable/andtools-1.8.0-py3-none-any.whl)
    ```bash
    curl -L -o andtools-1.8.0-py3-none-any.whl https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.0-py3-none-any.whl
    ```
 2. install using pip
-   ```
+   ```bash
    pip3 install andtools-1.8.0-py3-none-any.whl
+   ```
+   or
+   ```bash
+   pip3 install andtools-1.8.0-py3-none-any.whl && rm andtools-1.8.0-py3-none-any.whl
    ```
