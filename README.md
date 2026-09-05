@@ -1,7 +1,7 @@
 # Andev tools
 
 > Andev Tools is a collection of utilities for Python development
-> <br>_V: 1.8.0_
+> <br>_V: 1.8.5_
 
 ## Install
 
@@ -29,20 +29,20 @@
    ```
 5. installar
    ```bash
-   pip3 install dist/andtools-1.8.0-py3-none-any.whl
+   pip3 install dist/andtools-1.8.5-py3-none-any.whl
    ```
 
 ## Install in a project Steps
 
-1. Download whl.file from [releases](https://github.com/anderesu44/andtools/dub/releases/stable/andtools-1.8.0-py3-none-any.whl)
+1. Download whl.file from [releases](https://github.com/anderesu44/andtools/dub/releases/stable/andtools-1.8.5-py3-none-any.whl)
    ```bash
-   curl -L -o andtools-1.8.0-py3-none-any.whl https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.0-py3-none-any.whl
+   curl -L -o andtools-1.8.5-py3-none-any.whl https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.5-py3-none-any.whl
    ```
 2. install using pip
    ```bash
-   pip3 install andtools-1.8.0-py3-none-any.whl
+   pip3 install andtools-1.8.5-py3-none-any.whl
    ```
    or
    ```bash
-   pip3 install andtools-1.8.0-py3-none-any.whl && rm andtools-1.8.0-py3-none-any.whl
+   pip3 install andtools-1.8.5-py3-none-any.whl && rm andtools-1.8.5-py3-none-any.whl
    ```
