@@ -1,12 +1,16 @@
 {
-    "STABLE":{
-        "LASTEST":"1.8.0",
-        "Urls":{
-            "1.8.0":"https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.0-py3-none-any.whl",
-            "1.7.1":"https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.7.1-py3-none-any.whl",
-            "1.7.0":"https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.7.0-py3-none-any.whl",
-            "1.6.2":"https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.6.2-py3-none-any.whl",
-            "1.4.0":"https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.4.0-py3-none-any.whl"
+    "STABLE": {
+        "LASTEST": "1.8.5",
+        "Urls": {
+            "1.8.5": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.5-py3-none-any.whl",
+            "1.8.4": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.4-py3-none-any.whl",
+            "1.8.2": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.2-py3-none-any.whl",
+            "1.8.1": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.1-py3-none-any.whl",
+            "1.8.0": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.8.0-py3-none-any.whl",
+            "1.7.1": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.7.1-py3-none-any.whl",
+            "1.7.0": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.7.0-py3-none-any.whl",
+            "1.6.2": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.6.2-py3-none-any.whl",
+            "1.4.0": "https://github.com/anderesu44/andtools/raw/releases/stable/andtools-1.4.0-py3-none-any.whl"
         }
     }
 }
