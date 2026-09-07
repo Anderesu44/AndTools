@@ -1,6 +1,6 @@
 __author__ = "Andev"
 from .Types import Version as V
-__version__ = V(1,8,3)
+__version__ = V(1,8,5)
 
 import sys
 
@@ -259,7 +259,7 @@ class ExcpectionController:
         _special_vars[0].update(special_vars)
         msg = "" if msg == False else msg
         self.msg = msg or "An unexpected error has occurred, don't worry. if it persist contact me"
-        self.__version__ = "0.15.0"
+        self.__version__ = "0.16.0"
 
 
     def __call__(self,fun:function,except_fun:function|None = None,except_fun_args:list=[],except_fun_kwds:dict=dict()) -> function:
@@ -316,6 +316,7 @@ class ExcpectionController:
                 return ErrorControlled
 
             return return_
+        wrapper.__name__ = fun.__name__
         return wrapper # type: ignore
 
     @classmethod
